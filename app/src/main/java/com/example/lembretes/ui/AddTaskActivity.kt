@@ -6,6 +6,8 @@ import com.example.lembretes.databinding.ActivityAddTaskBinding
 import com.example.lembretes.extensions.format
 import com.example.lembretes.extensions.text
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import java.util.*
 
 class AddTaskActivity : AppCompatActivity() {
@@ -32,7 +34,18 @@ class AddTaskActivity : AppCompatActivity() {
             }
             datePicker.show(supportFragmentManager,"DATE_PICKER_TAG")
 
+        }
 
+        binding.tilHora.editText?.setOnClickListener {
+            val timePicker = MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_24H)
+                .build()
+            timePicker.addOnPositiveButtonClickListener {
+                binding.tilHora.text = "${timePicker.hour} ${timePicker.minute}"
+
+            }
+
+            timePicker.show(supportFragmentManager, null)
 
         }
     }
