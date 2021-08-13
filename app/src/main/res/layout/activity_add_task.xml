@@ -10,7 +10,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Criar Lembretes"
+        app:title="@string/label_new_task"
         app:navigationIcon="@drawable/ic_navigate" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
        android:layout_marginTop="16dp"
-        android:hint="Título"
+        android:hint="@string/label_title"
         app:layout_constraintStart_toStartOf="@+id/guide_start"
         app:layout_constraintEnd_toEndOf="@+id/guide_end"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" >
@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="@id/guide_end"
         android:layout_marginTop="8dp"
         android:id="@+id/til_descricao"
-        android:hint="Descrição"
+        android:hint="@string/label_description"
         app:layout_constraintTop_toBottomOf="@id/til_title"
         android:layout_height="200dp" >
 
@@ -68,7 +68,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/til_data"
         android:layout_marginTop="16dp"
-        android:hint="Data"
+        android:hint="@string/label_date"
         app:startIconDrawable="@drawable/ic_calendar"
         android:layout_width="0dp"
         android:layout_marginEnd="16dp"
@@ -88,7 +88,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_hora"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="Hora"
+        android:hint="@string/label_hour"
         app:layout_constraintStart_toEndOf="@id/til_data"
         app:layout_constraintEnd_toEndOf="@id/guide_end"
         app:startIconDrawable="@drawable/ic_timer"
@@ -106,7 +106,7 @@
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
-        android:text="Cancelar"
+        android:text="@string/label_cancel"
         android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="@id/guide_start"
         app:layout_constraintEnd_toEndOf="@id/guide_end"
@@ -117,7 +117,7 @@
         android:id="@+id/btn_criar"
         style="@style/Widget.MaterialComponents.Button"
         app:layout_constraintStart_toStartOf="@id/guide_start"
-        android:text="Criar Lembrete"
+        android:text="@string/label_new_task"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@id/guide_end"
         app:layout_constraintBottom_toBottomOf="parent"
