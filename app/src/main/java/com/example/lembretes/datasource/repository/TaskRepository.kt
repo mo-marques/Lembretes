@@ -10,4 +10,5 @@ interface TaskRepository {
     fun createTaks(registrationViewParams: RegistrationViewParams)
     fun getTask(id: Int): TaskDB
     fun getAllTasks(): LiveData<List<Task>>
+    fun getAllTasksList(): List<Task>
 }

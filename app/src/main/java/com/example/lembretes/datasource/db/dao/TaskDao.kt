@@ -13,8 +13,11 @@ interface TaskDao {
     @Query("SELECT * FROM task WHERE id = :id")
     fun getTask(id: Int): Task
 
-    @Query("SELECT * FROM task")
+    @Query("SELECT * FROM task ORDER BY title ASC")
     fun getAllTasks(): LiveData<List<Task>>
+
+    @Query("SELECT * FROM task ORDER BY title ASC")
+    fun getAllTasksList(): List<Task>
 
 
 

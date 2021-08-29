@@ -2,13 +2,16 @@ package com.example.lembretes.ui
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.example.lembretes.databinding.ActivityMainBinding
 import com.example.lembretes.datasource.TaskDataSource
+import com.example.lembretes.model.Task
 import com.example.lembretes.viewModel.TaskViewModel
 
 
@@ -30,7 +33,10 @@ class MainActivity : AppCompatActivity() {
             TaskViewModel.TaskViewModelFactory(this.application)
         ).get(TaskViewModel::class.java)
 
-        updateList()
+        viewModel.allTasks.observe(this) { list ->
+
+            updateList(list)
+        }
 
         insertListeners()
     }
@@ -49,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter.listenerCancel = {
             TaskDataSource.deleteTask(it)
-            updateList()
+//            updateList(viewModel.allTasks.value)
 
         }
 
@@ -57,16 +63,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CREATE_NEW_TASK && resultCode == Activity.RESULT_OK) updateList()
+        if (requestCode == CREATE_NEW_TASK && resultCode == Activity.RESULT_OK) updateList(viewModel.allTasks.value)
     }
 
-    private fun updateList () {
-        val list = viewModel.allTasks.value
-            binding.includeEmpty.emptyState.visibility = if (list?.isEmpty() == true) View.VISIBLE
+    private fun updateList (list: List<Task>?) {
+
+        binding.includeEmpty.emptyState.visibility = if (list?.isEmpty() == true) View.VISIBLE
         else View.GONE
 
         adapter.submitList(list)
     }
+
+//    private fun updateList () {
+//        viewModel.readAllData.observe(this, Observer {list->
+//            binding.includeEmpty.emptyState.visibility = if (list.isEmpty()) View.VISIBLE
+//            else View.GONE
+//
+//            binding.rvTasks.visibility = if (list.isNotEmpty()) View.VISIBLE
+//            else View.GONE
+//
+//            adapter.submitList(list)
+//        })
+//    }
 
     companion object {
         private const val CREATE_NEW_TASK = 100

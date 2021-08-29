@@ -1,6 +1,7 @@
 package com.example.lembretes.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.lembretes.datasource.db.AppDatabase
 import com.example.lembretes.datasource.repository.TaskDbDataSource
@@ -13,12 +14,16 @@ import java.lang.IllegalArgumentException
 class TaskViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: TaskDbDataSource
-    lateinit var  allTasks: LiveData<List<Task>>
+    val allTasks = MutableLiveData<List<Task>>()
 
     init {
         val taskDao = AppDatabase.getDataBase(application).taskDao()
         repository = TaskDbDataSource(taskDao)
-        allTasks = repository.getAllTasks()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            allTasks.postValue(repository.getAllTasksList())
+        }
+
 
     }
 
