@@ -10,7 +10,7 @@ data class Task(
     val description: String,
     val hour: String,
     val date: String,
-    @PrimaryKey val id: Int = 0
+    @PrimaryKey(autoGenerate = true) val id: Int = 0
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

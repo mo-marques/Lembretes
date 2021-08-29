@@ -1,18 +1,22 @@
 package com.example.lembretes.ui
 
 import android.app.Activity
+import android.app.Application
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.example.lembretes.databinding.ActivityMainBinding
 import com.example.lembretes.datasource.TaskDataSource
+import com.example.lembretes.viewModel.TaskViewModel
 
-@Suppress("DEPRECATION")
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val adapter by lazy { TaskListAdapter() }
+    private lateinit var viewModel : TaskViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +24,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.rvTasks.adapter = adapter
+
+        viewModel = ViewModelProvider(
+            this,
+            TaskViewModel.TaskViewModelFactory(this.application)
+        ).get(TaskViewModel::class.java)
+
         updateList()
 
         insertListeners()
@@ -51,8 +61,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateList () {
-        val list = TaskDataSource.getList()
-            binding.includeEmpty.emptyState.visibility = if (list.isEmpty()) View.VISIBLE
+        val list = viewModel.allTasks.value
+            binding.includeEmpty.emptyState.visibility = if (list?.isEmpty() == true) View.VISIBLE
         else View.GONE
 
         adapter.submitList(list)

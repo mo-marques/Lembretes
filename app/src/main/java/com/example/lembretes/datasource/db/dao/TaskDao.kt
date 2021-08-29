@@ -1,5 +1,6 @@
 package com.example.lembretes.datasource.db.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.lembretes.model.Task
 
@@ -12,6 +13,8 @@ interface TaskDao {
     @Query("SELECT * FROM task WHERE id = :id")
     fun getTask(id: Int): Task
 
+    @Query("SELECT * FROM task")
+    fun getAllTasks(): LiveData<List<Task>>
 
 
 

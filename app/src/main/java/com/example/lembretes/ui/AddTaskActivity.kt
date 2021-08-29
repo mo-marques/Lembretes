@@ -3,12 +3,14 @@ package com.example.lembretes.ui
 import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.lembretes.databinding.ActivityAddTaskBinding
 import com.example.lembretes.databinding.ActivityMainBinding
 import com.example.lembretes.datasource.TaskDataSource
 import com.example.lembretes.extensions.format
 import com.example.lembretes.extensions.text
 import com.example.lembretes.model.Task
+import com.example.lembretes.viewModel.TaskViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -17,11 +19,14 @@ import java.util.*
 class AddTaskActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityAddTaskBinding
+    private lateinit var mTaskViewModel: TaskViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
 
         if (intent.hasExtra(TASK_ID)) {
             val taskId = intent.getIntExtra(TASK_ID, 0)
@@ -79,6 +84,7 @@ class AddTaskActivity : AppCompatActivity() {
 
         )
             TaskDataSource.insertTask(task)
+            mTaskViewModel.addTask(task)
 
             setResult(Activity.RESULT_OK)
             finish()
